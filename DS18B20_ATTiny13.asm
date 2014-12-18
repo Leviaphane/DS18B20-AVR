@@ -1,4 +1,4 @@
-.include "TN13ADEF.inc" ; Используем ATMega16
+.include "TN13ADEF.inc" ;
 
 	.undef	ZL
 	.def	TimeReg = R25
