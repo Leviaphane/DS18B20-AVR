@@ -1,3 +1,8 @@
+;**********************************************************
+;***** ATMega13A + DS18B20 Thermometer ********************
+;**********************************************************
+; Module cyclically measure the temperature by the DS18B20
+
 .include "TN13ADEF.inc" 
 
 	.def	TempReg		=	R16
