@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm Thu Dec 18 21:36:08 2014
+AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm Sat Dec 20 12:58:06 2014
 
 
 EQU  SIGNATURE_000 0000001e
@@ -297,35 +297,21 @@ DEF  TByteL       r17
 DEF  TByteH       r18
 DEF  CommandReg   r20
 DEF  TimeReg      r25
-DEF  DataSPI      r19
-DEF  InputSPI     r21
-DEF  OutputSPI    r22
 EQU  ThermoPin    00000003
-EQU  LedPin       00000003
 EQU  ComDelay     00000032
-EQU  MOSI         00000000
-EQU  MISO         00000001
-EQU  SCK          00000002
-EQU  CE           00000003
-EQU  SC           00000004
 EQU  SkipROM      000000cc
 EQU  WriteData    0000004e
 EQU  ReadData     000000be
 EQU  Converse     00000044
 CSEG M0           0000000a
-CSEG Delay        00000053
-CSEG ResetPulse   00000094
-CSEG SendCommand  0000005b
-CSEG W0           00000016
-CSEG Read         00000082
-CSEG ReadCommand  00000066
-CSEG E0           00000022
-CSEG E1           0000002b
-CSEG SendSPI      000000a4
-CSEG E2           0000004d
-CSEG L0           00000055
-CSEG F0           0000005d
-CSEG Write0       00000079
-CSEG Write1       0000006e
-CSEG F1           00000068
-CSEG S0           000000a6
+CSEG Delay        00000030
+CSEG ResetPulse   00000071
+CSEG SendCommand  00000038
+CSEG W0           00000023
+CSEG Read         0000005f
+CSEG ReadCommand  00000043
+CSEG L0           00000032
+CSEG F0           0000003a
+CSEG Write0       00000056
+CSEG Write1       0000004b
+CSEG F1           00000045

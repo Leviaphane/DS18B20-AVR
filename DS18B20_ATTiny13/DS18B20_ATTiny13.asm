@@ -5,19 +5,10 @@
 	.def	TByteH		=	R18
 	.def	CommandReg	=	R20
 	.def	TimeReg		=	R25
-	.def	DataSPI		=	R19
-	.def	InputSPI	=	R21
-	.def	OutputSPI	=	R22
+
 
 	.equ	ThermoPin	=	3
-	.equ	LedPin		=	3
 	.equ	ComDelay	=	50
-
-	.equ	MOSI		=	0
-	.equ	MISO		=	1
-	.equ	SCK			=	2
-	.equ	CE			=	3
-	.equ	SC			=	4
 
 	; Thermo command
 	.equ	SkipROM		=	0b11001100		; Skip ROM (0xCC)		
@@ -58,7 +49,7 @@ M0:	// Init stack
 	LDI		TimeReg, 245
 	RCALL	Delay
 
-/*	// Setup DS18B20
+	// Setup DS18B20
 	RCALL	ResetPulse					; Reset/Present signal
 	
 	LDI		CommandReg, SkipROM			; Skip ROM (0xCC)
@@ -77,7 +68,7 @@ M0:	// Init stack
 	RCALL	SendCommand			 
 	
 	LDI		TimeReg, ComDelay
-	RCALL	Delay*/
+	RCALL	Delay
 
 	// Getting data from DS18B20
 	RCALL	ResetPulse					; Reset/Present signal
@@ -105,67 +96,6 @@ W0:	RCALL	Read						; Waiting for conversion
 
 	RCALL	ReadCommand					; Read Th
 	MOV		TByteH, CommandReg
-
-	// SPrepearing for send
-E0:	SBI		DDRB,	MOSI
-	CBI		DDRB,	MISO
-	SBI		DDRB,	SC
-	SBI		DDRB,	SCK
-	SBI		DDRB,	CE
-	
-	SBI		PORTB,	SC
-	CBI		PORTB,	CE
-	CBI		PORTB,	SCK
-	CBI		PORTB,	MISO
-	
-E1:	
-	CBI		PORTB,	SC
-	LDI		DataSPI, 0b00100111				; Write STATUS
-	RCALL	SendSPI
-	LDI		DataSPI, 0b01110000				; Init Data
-	RCALL	SendSPI
-	SBI		PORTB,	SC
-
-	LDI		TimeReg,	15
-	RCALL	Delay
-	
-	CBI		PORTB,	SC
-	LDI		DataSPI, 0b00100000				; Write CONFIG
-	RCALL	SendSPI
-	LDI		DataSPI, 0b00001010				; Init CONFIG
-	RCALL	SendSPI
-	SBI		PORTB,	SC
-	
-	LDI		TimeReg,	15
-	RCALL	Delay
-
-	CBI		PORTB,	SC
-	LDI		DataSPI, 0b10100000				; Send 
-	RCALL	SendSPI
-	MOV		DataSPI, TByteL					; Temp low byte
-	RCALL	SendSPI
-	MOV		DataSPI, TByteH					; Temp high byte
-	RCALL	SendSPI
-	SBI		PORTB,	SC
-
-	SBI		PORTB,	CE						; In AIR mode
-	LDI		TimeReg,	15
-	RCALL	Delay
-	CBI		PORTB,	CE						; Out AIR mode
-
-	; Усыпляем передатчик
-	CBI		PORTB,	SC
-	LDI		DataSPI, 0b00100000				; Write CONFIG
-	RCALL	SendSPI
-	LDI		DataSPI, 0b00001000				; Init CONFIG
-	RCALL	SendSPI
-	SBI		PORTB,	SC
-E2:
-	LDI		TimeReg,	250
-	RCALL	Delay
-	RCALL	Delay
-	RCALL	Delay
-	RCALL	Delay
 
 	RJMP	M0
 
@@ -304,47 +234,6 @@ ResetPulse:
 
 	SBI		PORTB, ThermoPin
 	SBI		DDRB, ThermoPin
-RET
-
-; ---------------------------------------------------------
-; ---- SPI Command ----------------------------------------
-; ---------------------------------------------------------
-
-; ---- Send Command to SPI
-SendSPI:
-	PUSH	TempReg
-
-	LDI		TempReg, 8
-
-S0:	SBRC	DataSPI, 7
-	SBI		PORTB, MOSI
-	SBRS	DataSPI, 7
-	CBI		PORTB, MOSI
-		
-	LDI		TimeReg, 5
-	RCALL	Delay	
-	
-	SBI		PORTB,	SCK
-	
-	LDI		TimeReg, 5
-	RCALL	Delay	
-
-	SBIC	PINB,	MISO
-	SBR		DataSPI, 0b10000000
-	SBIS	PINB,	MISO
-	CBR		DataSPI, 0b10000000
-	
-	CBI		PORTB,	SCK
-	
-	ROL		DataSPI
-
-	DEC		TempReg
-	BRBC	1, S0
-
-	LDI		TimeReg, 5
-	RCALL	Delay	
-			
-	POP		TempReg	
 RET
 
 ; EEPROM ==================================================
