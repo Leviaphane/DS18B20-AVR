@@ -22,17 +22,22 @@
   <FILE>DS18B20_ATTiny13.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <M0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>40</LINE></M0>
-  <Delay><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>107</LINE></Delay>
-  <ResetPulse><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>215</LINE></ResetPulse>
-  <SendCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>120</LINE></SendCommand>
-  <W0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>82</LINE></W0>
-  <Read><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>186</LINE></Read>
-  <ReadCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>137</LINE></ReadCommand>
-  <L0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>111</LINE></L0>
-  <F0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>124</LINE></F0>
-  <Write0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>170</LINE></Write0>
-  <Write1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>151</LINE></Write1>
-  <F1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>141</LINE></F1>
+  <M0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>49</LINE></M0>
+  <Delay><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>177</LINE></Delay>
+  <ResetPulse><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>285</LINE></ResetPulse>
+  <SendCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>190</LINE></SendCommand>
+  <W0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>91</LINE></W0>
+  <Read><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>256</LINE></Read>
+  <ReadCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>207</LINE></ReadCommand>
+  <E0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>110</LINE></E0>
+  <E1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>121</LINE></E1>
+  <SendSPI><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>314</LINE></SendSPI>
+  <E2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>163</LINE></E2>
+  <L0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>181</LINE></L0>
+  <F0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>194</LINE></F0>
+  <Write0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>240</LINE></Write0>
+  <Write1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>221</LINE></Write1>
+  <F1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>211</LINE></F1>
+  <S0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\DS18B20_ATTiny13\DS18B20_ATTiny13\DS18B20_ATTiny13.asm</FILE><LINE>319</LINE></S0>
  </LABELS>
 </ASSEMBLER_INFO>
