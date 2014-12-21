@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
-Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "DS18B20_ATTiny13", "DS18B20_ATTiny13\DS18B20_ATTiny13.asmproj", "{896C3F40-B3B8-4285-86D8-571AB3265325}"
+Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "DS18B20_NRF_24L01_ATTiny13", "DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asmproj", "{896C3F40-B3B8-4285-86D8-571AB3265325}"
+EndProject
+Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "ClockTest", "ClockTest\ClockTest.asmproj", "{23DAE8CE-54DA-47B6-8CE2-F27933D69E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{896C3F40-B3B8-4285-86D8-571AB3265325}.Debug|AVR.Build.0 = Debug|AVR
 		{896C3F40-B3B8-4285-86D8-571AB3265325}.Release|AVR.ActiveCfg = Release|AVR
 		{896C3F40-B3B8-4285-86D8-571AB3265325}.Release|AVR.Build.0 = Release|AVR
+		{23DAE8CE-54DA-47B6-8CE2-F27933D69E79}.Debug|AVR.ActiveCfg = Debug|AVR
+		{23DAE8CE-54DA-47B6-8CE2-F27933D69E79}.Debug|AVR.Build.0 = Debug|AVR
+		{23DAE8CE-54DA-47B6-8CE2-F27933D69E79}.Release|AVR.ActiveCfg = Release|AVR
+		{23DAE8CE-54DA-47B6-8CE2-F27933D69E79}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

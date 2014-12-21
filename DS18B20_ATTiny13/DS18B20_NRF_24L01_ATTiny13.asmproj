@@ -12,9 +12,9 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <Language>ASSEMBLY</Language>
     <AssemblyName>DS18B20_ATTiny13</AssemblyName>
-    <Name>DS18B20_ATTiny13</Name>
+    <Name>DS18B20_NRF_24L01_ATTiny13</Name>
     <RootNamespace>DS18B20_ATTiny13</RootNamespace>
-    <EntryFile>$(MSBuildProjectDirectory)\DS18B20_ATTiny13.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\DS18B20_NRF_24L01_ATTiny13.asm</EntryFile>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -66,7 +66,25 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DS18B20_ATTiny13.asm">
+    <Compile Include="Common.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common.inc">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DS18B20.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DS18B20.inc">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DS18B20_NRF_24L01_ATTiny13.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SPI.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SPI.inc">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
