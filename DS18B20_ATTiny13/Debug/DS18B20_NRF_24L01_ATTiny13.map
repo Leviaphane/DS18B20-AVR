@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Sun Dec 21 19:51:16 2014
+AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Sun Dec 21 21:41:02 2014
 
 
 EQU  SIGNATURE_000 0000001e
@@ -305,8 +305,6 @@ EQU  ThermoPort   00000018
 EQU  ThermoPin    00000003
 EQU  ComDelay     00000032
 DEF  SPI_Data     r19
-DEF  SPI_Input    r21
-DEF  SPI_Output   r22
 EQU  SPI_Port     00000018
 EQU  SPI_PIN      00000016
 EQU  SPI_DDR      00000017
@@ -315,28 +313,32 @@ EQU  SPI_MISO     00000001
 EQU  SPI_SCK      00000002
 EQU  SPI_CE       00000003
 EQU  SPI_SC       00000004
+EQU  DeviceID     000000aa
 EQU  TimeLim1     00000032
 EQU  TimeLim2     00000000
 EQU  TimeLim3     00000000
 DSEG TimeCount    00000060
+DSEG ThermoData   00000063
 CSEG M0           0000001d
 CSEG M1           0000000a
 CSEG M2           0000001c
-CSEG Delay        00000079
-CSEG ResetPulse   000000ba
-CSEG SendCommand  00000081
+CSEG Delay        00000084
+CSEG ResetPulse   000000c5
+CSEG SendCommand  0000008c
 CSEG W0           0000003a
-CSEG Read         000000a8
-CSEG ReadCommand  0000008c
-CSEG E0           00000046
-CSEG SPI_Init     000000ca
-CSEG E1           00000047
-CSEG SPI_Send     000000d4
-CSEG E2           00000069
-CSEG E3           00000077
-CSEG L0           0000007b
-CSEG F0           00000083
-CSEG Write0       0000009f
-CSEG Write1       00000094
-CSEG F1           0000008e
-CSEG S0           000000d6
+CSEG Read         000000b3
+CSEG W1           00000047
+CSEG ReadCommand  00000097
+CSEG E0           0000004b
+CSEG SPI_Init     000000d5
+CSEG E1           0000004c
+CSEG SPI_Send     000000df
+CSEG W2           00000062
+CSEG E2           00000071
+CSEG E3           00000082
+CSEG L0           00000086
+CSEG F0           0000008e
+CSEG Write0       000000aa
+CSEG Write1       0000009f
+CSEG F1           00000099
+CSEG S0           000000e1

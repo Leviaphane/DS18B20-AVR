@@ -18,8 +18,6 @@
 	.device ATtiny13A
 
 	.def	SPI_Data	=	R19
-	.def	SPI_Input	=	R21
-	.def	SPI_Output	=	R22
 
 	// Pins defenition
 	.equ	SPI_Port		=	PORTB

@@ -28,22 +28,25 @@
   <FILE>DS18B20_NRF_24L01_ATTiny13.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <TimeCount><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>13</LINE></TimeCount>
-  <M0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>57</LINE></M0>
-  <M1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>31</LINE></M1>
-  <M2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>54</LINE></M2>
+  <TimeCount><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>14</LINE></TimeCount>
+  <ThermoData><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>15</LINE></ThermoData>
+  <M0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>59</LINE></M0>
+  <M1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>33</LINE></M1>
+  <M2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>56</LINE></M2>
   <Delay><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\Common.asm</FILE><LINE>23</LINE></Delay>
   <ResetPulse><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>118</LINE></ResetPulse>
   <SendCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>23</LINE></SendCommand>
-  <W0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>110</LINE></W0>
+  <W0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>111</LINE></W0>
   <Read><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>89</LINE></Read>
+  <W1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>129</LINE></W1>
   <ReadCommand><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>40</LINE></ReadCommand>
-  <E0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>129</LINE></E0>
+  <E0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>137</LINE></E0>
   <SPI_Init><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\SPI.asm</FILE><LINE>22</LINE></SPI_Init>
-  <E1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>132</LINE></E1>
+  <E1><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>140</LINE></E1>
   <SPI_Send><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\SPI.asm</FILE><LINE>36</LINE></SPI_Send>
-  <E2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>175</LINE></E2>
-  <E3><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>201</LINE></E3>
+  <W2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>170</LINE></W2>
+  <E2><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>192</LINE></E2>
+  <E3><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm</FILE><LINE>222</LINE></E3>
   <L0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\Common.asm</FILE><LINE>27</LINE></L0>
   <F0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>27</LINE></F0>
   <Write0><FILE>E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm</FILE><LINE>73</LINE></Write0>

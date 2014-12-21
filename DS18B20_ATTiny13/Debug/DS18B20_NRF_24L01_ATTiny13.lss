@@ -1,14 +1,14 @@
 
-AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Sun Dec 21 19:51:16 2014
+AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Sun Dec 21 21:41:02 2014
 
 [builtin](2): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\tn13Adef.inc'
 E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(1): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\TN13ADEF.inc'
 E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(2): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\Common.inc'
 E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(3): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.inc'
 E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(4): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\SPI.inc'
-E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(206): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\Common.asm'
-E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(207): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm'
-E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(208): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\SPI.asm'
+E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(227): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\Common.asm'
+E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(228): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20.asm'
+E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm(229): Including file 'E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\SPI.asm'
                  
                  .include "TN13ADEF.inc" 
                  
@@ -611,8 +611,6 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  	.device ATtiny13A
                  
                  	.def	SPI_Data	=	R19
-                 	.def	SPI_Input	=	R21
-                 	.def	SPI_Output	=	R22
                  
                  	// Pins defenition
                  	.equ	SPI_Port		=	PORTB
@@ -626,6 +624,7 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  #endif  /* _SPI_INC_ */
                  
                  
+                 	.equ	DeviceID	=	0b10101010
                  	.equ	TimeLim1	=	50
                  	.equ	TimeLim2	=	0
                  	.equ	TimeLim3	=	0
@@ -634,6 +633,7 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  ; RAM =====================================================
                  .DSEG ; RAM
 000060           TimeCount:	.BYTE		3	;  Time counter	
+000063           ThermoData:	.BYTE		10	;  Data to transmit
                  
                  ; FLASH ===================================================
                  .CSEG ; Code segment
@@ -684,7 +684,6 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
 00001e e90f      	LDI		TempReg, low(RAMEND)
 00001f bf0d      	OUT		SPL, TempReg
                  	
-                 	
                  	// Setup timer
 000020 e005      	LDI		TempReg, 0b00000101
 000021 bf03      	OUT		TCCR0B,	TempReg
@@ -696,134 +695,154 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
 000025 9ac3      	SBI		ThermoPort,	ThermoPin
                  
 000026 ef95      	LDI		TimeReg, 245
-000027 d051      	RCALL	Delay
+000027 d05c      	RCALL	Delay
                  
                  	//RJMP	E2
                  
                  	// Setup DS18B20
-000028 d091      	RCALL	ResetPulse					; Reset/Present signal
+000028 d09c      	RCALL	ResetPulse					; Reset/Present signal
                  	
 000029 ec4c      	LDI		CommandReg, SkipROM			; Skip ROM (0xCC)
-00002a d056      	RCALL	SendCommand			
+00002a d061      	RCALL	SendCommand			
                  
 00002b e44e      	LDI		CommandReg, WriteData		; Write SkratchPad(0x4E)
-00002c d054      	RCALL	SendCommand
+00002c d05f      	RCALL	SendCommand
                  	
 00002d ef4f      	LDI		CommandReg, 0b11111111		; Write Th (No alarm)
-00002e d052      	RCALL	SendCommand
+00002e d05d      	RCALL	SendCommand
                  				
 00002f ef4f      	LDI		CommandReg, 0b11111111		; Write Tl (No alarm)
-000030 d050      	RCALL	SendCommand 
+000030 d05b      	RCALL	SendCommand 
                  
-000031 e040      	LDI		CommandReg, 0b00000000		; Write ConfigReg (0.5C accuracy)
-000032 d04e      	RCALL	SendCommand			 
+000031 e640      	LDI		CommandReg, 0b01100000		; Write ConfigReg (0.5C accuracy)
+000032 d059      	RCALL	SendCommand			 
                  	
 000033 e392      	LDI		TimeReg, ComDelay
-000034 d044      	RCALL	Delay
+000034 d04f      	RCALL	Delay
                  
                  	// Getting data from DS18B20
-000035 d084      	RCALL	ResetPulse					; Reset/Present signal
+000035 d08f      	RCALL	ResetPulse					; Reset/Present signal
                  
 000036 ec4c      	LDI		CommandReg, SkipROM			; Skip ROM (0xCC)
-000037 d049      	RCALL	SendCommand			
+000037 d054      	RCALL	SendCommand			
                  
 000038 e444      	LDI		CommandReg, Converse		; Convert T (0x44)
-000039 d047      	RCALL	SendCommand
+000039 d052      	RCALL	SendCommand
                  
-00003a d06d      W0:	RCALL	Read						; Waiting for conversion
+00003a d078      W0:	RCALL	Read						; Waiting for conversion
 00003b ff47      	SBRS	CommandReg, 7				
 00003c cffd      	RJMP	W0
                  
-00003d d07c      	RCALL	ResetPulse					; Reset/Present signal
+00003d d087      	RCALL	ResetPulse					; Reset/Present signal
                  	
 00003e ec4c      	LDI		CommandReg, SkipROM			; Skip ROM (0xCC)
-00003f d041      	RCALL	SendCommand			
+00003f d04c      	RCALL	SendCommand			
                  
 000040 eb4e      	LDI		CommandReg, ReadData		; Read ScratchPad (0xBE)
-000041 d03f      	RCALL	SendCommand
+000041 d04a      	RCALL	SendCommand
                  
-000042 d049      	RCALL	ReadCommand					; Read Tl
-000043 2f14      	MOV		TByteL, CommandReg
+000042 e6e3      	LDI		R30, low(ThermoData)
+000043 e0f0      	LDI		R31, high(ThermoData)
+000044 ea0a      	LDI		TempReg, DeviceID
+000045 9301      	ST		Z+, TempReg
                  
-000044 d047      	RCALL	ReadCommand					; Read Th
-000045 2f24      	MOV		TByteH, CommandReg
+000046 e009      	LDI		TempReg, 9
+                 W1:
+000047 d04f      	RCALL	ReadCommand					; Read data
+000048 9341      	ST		Z+, CommandReg
+                 
+000049 950a      	DEC		TempReg
+00004a f7e1      	BRNE	W1
                  
                  	// SPrepearing for send
                  E0:	
-000046 d083      	RCALL	SPI_Init
+00004b d089      	RCALL	SPI_Init
                  	
                  E1:	
-000047 98c4      	CBI		SPI_Port,	SPI_SC
-000048 e237      	LDI		SPI_Data,	0b00100111				; Write STATUS
-000049 d08a      	RCALL	SPI_Send
-00004a e730      	LDI		SPI_Data,	0b01110000				; Init Data
-00004b d088      	RCALL	SPI_Send
-00004c 9ac4      	SBI		SPI_Port,	SPI_SC
+00004c 98c4      	CBI		SPI_Port,	SPI_SC
+00004d e237      	LDI		SPI_Data,	0b00100111				; Write STATUS
+00004e d090      	RCALL	SPI_Send
+00004f e730      	LDI		SPI_Data,	0b01110000				; Init Data
+000050 d08e      	RCALL	SPI_Send
+000051 9ac4      	SBI		SPI_Port,	SPI_SC
                  
-00004d e09f      	LDI		TimeReg,	15
-00004e d02a      	RCALL	Delay
+000052 e09f      	LDI		TimeReg,	15
+000053 d030      	RCALL	Delay
                  	
-00004f 98c4      	CBI		SPI_Port,	SPI_SC
-000050 e230      	LDI		SPI_Data,	0b00100000				; Write CONFIG
-000051 d082      	RCALL	SPI_Send
-000052 e03a      	LDI		SPI_Data,	0b00001010				; Init CONFIG
-000053 d080      	RCALL	SPI_Send
-000054 9ac4      	SBI		SPI_Port,	SPI_SC
+000054 98c4      	CBI		SPI_Port,	SPI_SC
+000055 e230      	LDI		SPI_Data,	0b00100000				; Write CONFIG
+000056 d088      	RCALL	SPI_Send
+000057 e03a      	LDI		SPI_Data,	0b00001010				; Init CONFIG
+000058 d086      	RCALL	SPI_Send
+000059 9ac4      	SBI		SPI_Port,	SPI_SC
                  	
-000055 e09f      	LDI		TimeReg,	15
-000056 d022      	RCALL	Delay
+00005a e09f      	LDI		TimeReg,	15
+00005b d028      	RCALL	Delay
                  
-000057 98c4      	CBI		SPI_Port,	SPI_SC
-000058 ea30      	LDI		SPI_Data,	0b10100000				; Send 
-000059 d07a      	RCALL	SPI_Send
-00005a 2f31      	MOV		SPI_Data,	TByteL					; Temp low byte
-00005b d078      	RCALL	SPI_Send
-00005c 2f32      	MOV		SPI_Data,	TByteH					; Temp high byte
-00005d d076      	RCALL	SPI_Send
-00005e 9ac4      	SBI		SPI_Port,	SPI_SC
+00005c 98c4      	CBI		SPI_Port,	SPI_SC
+00005d ea30      	LDI		SPI_Data,	0b10100000				; Send 
+00005e d080      	RCALL	SPI_Send
+                 	
+                 	// Load data
+00005f e6e3      	LDI		R30, low(ThermoData)
+000060 e0f0      	LDI		R31, high(ThermoData)
                  
-00005f 9ac3      	SBI		SPI_Port,	SPI_CE					; In AIR mode
-000060 e09f      	LDI		TimeReg,	15
-000061 d017      	RCALL	Delay
-000062 98c3      	CBI		SPI_Port,	SPI_CE					; Out AIR mode
+000061 e00a      	LDI		TempReg, 10
+                 W2:
+000062 9131      	LD		SPI_Data, Z+
+000063 d07b      	RCALL	SPI_Send
+                 
+000064 950a      	DEC		TempReg
+000065 f7e1      	BRNE	W2
+000066 9ac4      	SBI		SPI_Port,	SPI_SC
+                 	
+                 	// Transmit data
+000067 9ac3      	SBI		SPI_Port,	SPI_CE					; In AIR mode
+000068 e199      	LDI		TimeReg,	25
+000069 d01a      	RCALL	Delay
+00006a 98c3      	CBI		SPI_Port,	SPI_CE					; Out AIR mode
                  
                  	; Усыпляем передатчик
-000063 98c4      	CBI		SPI_Port,	SPI_SC
-000064 e230      	LDI		SPI_Data,	0b00100000				; Write CONFIG
-000065 d06e      	RCALL	SPI_Send
-000066 e038      	LDI		SPI_Data,	0b00001000				; Init CONFIG
-000067 d06c      	RCALL	SPI_Send
-000068 9ac4      	SBI		SPI_Port,	SPI_SC
+00006b 98c4      	CBI		SPI_Port,	SPI_SC
+00006c e230      	LDI		SPI_Data,	0b00100000				; Write CONFIG
+00006d d071      	RCALL	SPI_Send
+00006e e038      	LDI		SPI_Data,	0b00001000				; Init CONFIG
+00006f d06f      	RCALL	SPI_Send
+000070 9ac4      	SBI		SPI_Port,	SPI_SC
                  
                  E2: ; Turn on the timer and go to sleep
                  	
                  
-000069 e6e0      	LDI		R30, low(TimeCount)
-00006a e0f0      	LDI		R31, high(TimeCount)
+000071 e6e0      	LDI		R30, low(TimeCount)
+000072 e0f0      	LDI		R31, high(TimeCount)
                  
-00006b e302      	LDI		TempReg, TimeLim1		
-00006c 9301      	ST		Z+,		TempReg
+000073 e302      	LDI		TempReg, TimeLim1		
+000074 9301      	ST		Z+,		TempReg
                  
-00006d e000      	LDI		TempReg, TimeLim2		
-00006e 9301      	ST		Z+,		TempReg
+000075 e000      	LDI		TempReg, TimeLim2		
+000076 9301      	ST		Z+,		TempReg
                  
-00006f e000      	LDI		TempReg, TimeLim3		
-000070 8300      	ST		Z,		TempReg
+000077 e000      	LDI		TempReg, TimeLim3		
+000078 8300      	ST		Z,		TempReg
                  
-000071 e000      	LDI		TempReg, 0
-000072 bf02      	OUT		TCNT0, TempReg
+000079 b708      	IN		TempReg, TIFR0
+00007a 6002      	ORI		TempReg, 0b00000010
+00007b bf08      	OUT		TIFR0, TempReg
+                 
+00007c e000      	LDI		TempReg, 0
+00007d bf02      	OUT		TCNT0, TempReg
                  						
-000073 9478      	SEI
+00007e 9478      	SEI
                  
-000074 b705      	IN		TempReg, MCUCR
-000075 6200      	ORI		TempReg, 0b00100000
-000076 bf05      	OUT		MCUCR,	TempReg 
+00007f b705      	IN		TempReg, MCUCR
+000080 6200      	ORI		TempReg, 0b00100000
+000081 bf05      	OUT		MCUCR,	TempReg 
                  
                  
                  
                  E3:
-000077 9588      	SLEEP	
-000078 cffe      	RJMP	E3
+000082 9588      	SLEEP	
+000083 cffe      	RJMP	E3
                  
                  // Function ===============================================
                  .include "Common.asm"
@@ -850,16 +869,16 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  
                  ; ---- Delay in us
                  Delay:
-000079 930f      	PUSH	TempReg
+000084 930f      	PUSH	TempReg
                  
-00007a 2f09      	MOV		TempReg, TimeReg
-00007b 0000      L0:	NOP
-00007c 0000      	NOP
-00007d 950a      	DEC		TempReg
-00007e f7e1      	BRBC	1, L0
+000085 2f09      	MOV		TempReg, TimeReg
+000086 0000      L0:	NOP
+000087 0000      	NOP
+000088 950a      	DEC		TempReg
+000089 f7e1      	BRBC	1, L0
                  
-00007f 910f      	POP		TempReg
-000080 9508      RET
+00008a 910f      	POP		TempReg
+00008b 9508      RET
                  .include "DS18B20.asm"
                  
                   * DS18B20.inc
@@ -884,123 +903,123 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  
                  ; ---- Send command to DS18B20
                  SendCommand:
-000081 930f      	PUSH	TempReg
-                 
-000082 e008      	LDI		TempReg, 8
-000083 ff40      F0:	SBRS	CommandReg, 0
-000084 d01a      	RCALL	Write0
-000085 fd40      	SBRC	CommandReg, 0	
-000086 d00d      	RCALL	Write1
-                 
-000087 9547      	ROR		CommandReg
-000088 950a      	DEC		TempReg
-000089 f7c9      	BRBC	1, F0
-                 
-00008a 910f      	POP		TempReg
-00008b 9508      	RET
-                 
-                 ; ---- Read data from DS18B20
-                 ReadCommand:
 00008c 930f      	PUSH	TempReg
                  
 00008d e008      	LDI		TempReg, 8
-                 F1:	
-00008e 9546      	LSR		CommandReg
-00008f d018      	RCALL	Read
-000090 950a      	DEC		TempReg
-000091 f7e1      	BRBC	1, F1
+00008e ff40      F0:	SBRS	CommandReg, 0
+00008f d01a      	RCALL	Write0
+000090 fd40      	SBRC	CommandReg, 0	
+000091 d00d      	RCALL	Write1
                  
-000092 910f      	POP		TempReg
-000093 9508      	RET
+000092 9547      	ROR		CommandReg
+000093 950a      	DEC		TempReg
+000094 f7c9      	BRBC	1, F0
+                 
+000095 910f      	POP		TempReg
+000096 9508      	RET
+                 
+                 ; ---- Read data from DS18B20
+                 ReadCommand:
+000097 930f      	PUSH	TempReg
+                 
+000098 e008      	LDI		TempReg, 8
+                 F1:	
+000099 9546      	LSR		CommandReg
+00009a d018      	RCALL	Read
+00009b 950a      	DEC		TempReg
+00009c f7e1      	BRBC	1, F1
+                 
+00009d 910f      	POP		TempReg
+00009e 9508      	RET
                  
                  ; ---- Send bit 1
                  Write1:
-000094 9ac3      	SBI		ThermoPort, ThermoPin
-000095 9abb      	SBI		DDRB, ThermoPin
+00009f 9ac3      	SBI		ThermoPort, ThermoPin
+0000a0 9abb      	SBI		DDRB, ThermoPin
                  
-000096 e095      	LDI		TimeReg, 5
-000097 dfe1      	RCALL	Delay
+0000a1 e095      	LDI		TimeReg, 5
+0000a2 dfe1      	RCALL	Delay
                  
-000098 98c3      	CBI		ThermoPort, ThermoPin
+0000a3 98c3      	CBI		ThermoPort, ThermoPin
                  	
-000099 e095      	LDI		TimeReg, 5
-00009a dfde      	RCALL	Delay
+0000a4 e095      	LDI		TimeReg, 5
+0000a5 dfde      	RCALL	Delay
                  
-00009b 9ac3      	SBI		ThermoPort, ThermoPin
+0000a6 9ac3      	SBI		ThermoPort, ThermoPin
                  	
-00009c e39c      	LDI		TimeReg, 60
-00009d dfdb      	RCALL	Delay	
-00009e 9508      RET
+0000a7 e39c      	LDI		TimeReg, 60
+0000a8 dfdb      	RCALL	Delay	
+0000a9 9508      RET
                  
                  ; ---- Send bit 0
                  Write0:
-00009f 9abb      	SBI		DDRB, ThermoPin
-0000a0 9ac3      	SBI		ThermoPort, ThermoPin
+0000aa 9abb      	SBI		DDRB, ThermoPin
+0000ab 9ac3      	SBI		ThermoPort, ThermoPin
                  
-0000a1 e095      	LDI		TimeReg, 5
-0000a2 dfd6      	RCALL	Delay
+0000ac e095      	LDI		TimeReg, 5
+0000ad dfd6      	RCALL	Delay
                  
-0000a3 98c3      	CBI		ThermoPort, ThermoPin
+0000ae 98c3      	CBI		ThermoPort, ThermoPin
                  
-0000a4 e39c      	LDI		TimeReg, 60
-0000a5 dfd3      	RCALL	Delay
+0000af e39c      	LDI		TimeReg, 60
+0000b0 dfd3      	RCALL	Delay
                  
-0000a6 9ac3      	SBI		ThermoPort, ThermoPin	
-0000a7 9508      RET
+0000b1 9ac3      	SBI		ThermoPort, ThermoPin	
+0000b2 9508      RET
                  
                  ; ---- Read bit
                  Read:
-0000a8 9ac3      	SBI		ThermoPort, ThermoPin
-0000a9 9abb      	SBI		DDRB, ThermoPin
+0000b3 9ac3      	SBI		ThermoPort, ThermoPin
+0000b4 9abb      	SBI		DDRB, ThermoPin
                  
-0000aa e095      	LDI		TimeReg, 5
-0000ab dfcd      	RCALL	Delay
+0000b5 e095      	LDI		TimeReg, 5
+0000b6 dfcd      	RCALL	Delay
                  
-0000ac 98c3      	CBI		ThermoPort, ThermoPin
+0000b7 98c3      	CBI		ThermoPort, ThermoPin
                  
-0000ad e091      	LDI		TimeReg, 1
-0000ae dfca      	RCALL	Delay
+0000b8 e091      	LDI		TimeReg, 1
+0000b9 dfca      	RCALL	Delay
                  
-0000af 98bb      	CBI		DDRB, ThermoPin
+0000ba 98bb      	CBI		DDRB, ThermoPin
                  
-0000b0 e09f      	LDI		TimeReg, 15
-0000b1 dfc7      	RCALL	Delay
+0000bb e09f      	LDI		TimeReg, 15
+0000bc dfc7      	RCALL	Delay
                  
-0000b2 6840      	SBR		CommandReg, 0b10000000 
-0000b3 9bb3      	SBIS	PINB, ThermoPin
-0000b4 774f      	CBR		CommandReg, 0b10000000
+0000bd 6840      	SBR		CommandReg, 0b10000000 
+0000be 9bb3      	SBIS	PINB, ThermoPin
+0000bf 774f      	CBR		CommandReg, 0b10000000
                  
-0000b5 e29d      	LDI		TimeReg, 45
-0000b6 dfc2      	RCALL	Delay
+0000c0 e29d      	LDI		TimeReg, 45
+0000c1 dfc2      	RCALL	Delay
                  
-0000b7 9ac3      	SBI		ThermoPort, ThermoPin
-0000b8 9abb      	SBI		DDRB, ThermoPin
-0000b9 9508      RET
+0000c2 9ac3      	SBI		ThermoPort, ThermoPin
+0000c3 9abb      	SBI		DDRB, ThermoPin
+0000c4 9508      RET
                  
                  ; ---- Send Reset pulse
                  ResetPulse:
-0000ba 98c3      	CBI		ThermoPort, ThermoPin
+0000c5 98c3      	CBI		ThermoPort, ThermoPin
                  
-0000bb ef95      	LDI		TimeReg, 245
-0000bc dfbc      	RCALL	Delay
-0000bd dfbb      	RCALL	Delay
+0000c6 ef95      	LDI		TimeReg, 245
+0000c7 dfbc      	RCALL	Delay
+0000c8 dfbb      	RCALL	Delay
                  
-0000be 98bb      	CBI		DDRB, ThermoPin
+0000c9 98bb      	CBI		DDRB, ThermoPin
                  
-0000bf e491      	LDI		TimeReg, 65
-0000c0 dfb8      	RCALL	Delay
+0000ca e491      	LDI		TimeReg, 65
+0000cb dfb8      	RCALL	Delay
                  
-0000c1 b306      	IN		TempReg, PINB
-0000c2 fd03      	SBRC	TempReg, ThermoPin
-0000c3 ef4f      	LDI		CommandReg, 0xFF				; Sensor error
+0000cc b306      	IN		TempReg, PINB
+0000cd fd03      	SBRC	TempReg, ThermoPin
+0000ce ef4f      	LDI		CommandReg, 0xFF				; Sensor error
                  
-0000c4 ef95      	LDI		TimeReg, 245
-0000c5 dfb3      	RCALL	Delay
-0000c6 dfb2      	RCALL	Delay
+0000cf ef95      	LDI		TimeReg, 245
+0000d0 dfb3      	RCALL	Delay
+0000d1 dfb2      	RCALL	Delay
                  
-0000c7 9ac3      	SBI		ThermoPort, ThermoPin
-0000c8 9abb      	SBI		DDRB, ThermoPin
-0000c9 9508      RET
+0000d2 9ac3      	SBI		ThermoPort, ThermoPin
+0000d3 9abb      	SBI		DDRB, ThermoPin
+0000d4 9508      RET
                  
                  .include "SPI.asm"
                  
@@ -1025,54 +1044,54 @@ E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NR
                  .CSEG	
                  ; ---- Init SPI
                  SPI_Init:
-0000ca 9ab8      	SBI		SPI_DDR,	SPI_MOSI
-0000cb 98b9      	CBI		SPI_DDR,	SPI_MISO
-0000cc 9abc      	SBI		SPI_DDR,	SPI_SC
-0000cd 9aba      	SBI		SPI_DDR,	SPI_SCK
-0000ce 9abb      	SBI		SPI_DDR,	SPI_CE
+0000d5 9ab8      	SBI		SPI_DDR,	SPI_MOSI
+0000d6 98b9      	CBI		SPI_DDR,	SPI_MISO
+0000d7 9abc      	SBI		SPI_DDR,	SPI_SC
+0000d8 9aba      	SBI		SPI_DDR,	SPI_SCK
+0000d9 9abb      	SBI		SPI_DDR,	SPI_CE
                  	
-0000cf 9ac4      	SBI		SPI_Port,	SPI_SC
-0000d0 98c3      	CBI		SPI_Port,	SPI_CE
-0000d1 98c2      	CBI		SPI_Port,	SPI_SCK
-0000d2 98c1      	CBI		SPI_Port,	SPI_MISO
-0000d3 9508      RET
+0000da 9ac4      	SBI		SPI_Port,	SPI_SC
+0000db 98c3      	CBI		SPI_Port,	SPI_CE
+0000dc 98c2      	CBI		SPI_Port,	SPI_SCK
+0000dd 98c1      	CBI		SPI_Port,	SPI_MISO
+0000de 9508      RET
                  
                  ; ---- Send Command to SPI
                  SPI_Send:
-0000d4 930f      	PUSH	TempReg
+0000df 930f      	PUSH	TempReg
                  
-0000d5 e008      	LDI		TempReg, 8
+0000e0 e008      	LDI		TempReg, 8
                  
-0000d6 fd37      S0:	SBRC	SPI_Data, 7
-0000d7 9ac0      	SBI		SPI_Port, SPI_MOSI
-0000d8 ff37      	SBRS	SPI_Data, 7
-0000d9 98c0      	CBI		SPI_Port, SPI_MOSI
+0000e1 fd37      S0:	SBRC	SPI_Data, 7
+0000e2 9ac0      	SBI		SPI_Port, SPI_MOSI
+0000e3 ff37      	SBRS	SPI_Data, 7
+0000e4 98c0      	CBI		SPI_Port, SPI_MOSI
                  		
-0000da e095      	LDI		TimeReg, 5
-0000db df9d      	RCALL	Delay	
+0000e5 e095      	LDI		TimeReg, 5
+0000e6 df9d      	RCALL	Delay	
                  	
-0000dc 9ac2      	SBI		SPI_Port,	SPI_SCK
+0000e7 9ac2      	SBI		SPI_Port,	SPI_SCK
                  	
-0000dd e095      	LDI		TimeReg, 5
-0000de df9a      	RCALL	Delay	
+0000e8 e095      	LDI		TimeReg, 5
+0000e9 df9a      	RCALL	Delay	
                  
-0000df 99b1      	SBIC	SPI_PIN,	SPI_MISO
-0000e0 6830      	SBR		SPI_Data,	0b10000000
-0000e1 9bb1      	SBIS	SPI_PIN,	SPI_MISO
-0000e2 773f      	CBR		SPI_Data,	0b10000000
+0000ea 99b1      	SBIC	SPI_PIN,	SPI_MISO
+0000eb 6830      	SBR		SPI_Data,	0b10000000
+0000ec 9bb1      	SBIS	SPI_PIN,	SPI_MISO
+0000ed 773f      	CBR		SPI_Data,	0b10000000
                  	
-0000e3 98c2      	CBI		SPI_Port,	SPI_SCK
+0000ee 98c2      	CBI		SPI_Port,	SPI_SCK
                  	
-0000e4 1f33      	ROL		SPI_Data
+0000ef 1f33      	ROL		SPI_Data
                  
-0000e5 950a      	DEC		TempReg
-0000e6 f779      	BRBC	1, S0
+0000f0 950a      	DEC		TempReg
+0000f1 f779      	BRBC	1, S0
                  
-0000e7 e095      	LDI		TimeReg, 5
-0000e8 df90      	RCALL	Delay	
+0000f2 e095      	LDI		TimeReg, 5
+0000f3 df90      	RCALL	Delay	
                  			
-0000e9 910f      	POP		TempReg	
-0000ea 9508      RET
+0000f4 910f      	POP		TempReg	
+0000f5 9508      RET
                  
                  
                  ; EEPROM ==================================================
@@ -1096,37 +1115,37 @@ counted separately from r26..r31 here.
 "ATtiny13A" register use summary:
 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:  47 r17:   2 r18:   2 r19:  14 r20:  19 r21:   0 r22:   0 r23:   0 
-r24:   0 r25:  21 r26:   0 r27:   0 r28:   0 r29:   0 r30:   2 r31:   2 
-x  :   0 y  :   0 z  :   9 
-Registers used: 9 out of 35 (25.7%)
+r16:  56 r17:   0 r18:   0 r19:  13 r20:  18 r21:   0 r22:   0 r23:   0 
+r24:   0 r25:  21 r26:   0 r27:   0 r28:   0 r29:   0 r30:   4 r31:   4 
+x  :   0 y  :   0 z  :  12 
+Registers used: 7 out of 35 (20.0%)
 
 "ATtiny13A" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   4 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   3 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 cbi   :  17 cbr   :   2 clc   :   0 
 clh   :   0 cli   :   1 cln   :   0 clr   :   0 cls   :   0 clt   :   0 
 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   3 
-cpse  :   0 dec   :   7 eor   :   0 icall :   0 ijmp  :   0 in    :   2 
-inc   :   0 ld    :   3 ldd   :   0 ldi   :  51 lds   :   0 lpm   :   0 
-lsl   :   0 lsr   :   1 mov   :   5 movw  :   0 neg   :   0 nop   :   2 
-or    :   0 ori   :   1 out   :   5 pop   :   4 push  :   4 rcall :  50 
+cpse  :   0 dec   :   9 eor   :   0 icall :   0 ijmp  :   0 in    :   3 
+inc   :   0 ld    :   4 ldd   :   0 ldi   :  58 lds   :   0 lpm   :   0 
+lsl   :   0 lsr   :   1 mov   :   1 movw  :   0 neg   :   0 nop   :   2 
+or    :   0 ori   :   2 out   :   6 pop   :   4 push  :   4 rcall :  48 
 ret   :   9 reti  :   1 rjmp  :  13 rol   :   1 ror   :   1 sbc   :   0 
 sbci  :   0 sbi   :  26 sbic  :   1 sbis  :   2 sbiw  :   0 sbr   :   2 
 sbrc  :   3 sbrs  :   3 sec   :   0 seh   :   0 sei   :   1 sen   :   0 
 ser   :   0 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   1 
-spm   :   0 st    :   6 std   :   0 sts   :   0 sub   :   0 subi  :   0 
+spm   :   0 st    :   8 std   :   0 sts   :   0 sub   :   0 subi  :   0 
 swap  :   0 tst   :   0 wdr   :   0 
 Instructions used: 32 out of 105 (30.5%)
 
 "ATtiny13A" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0001d6    470      0    470    1024  45.9%
-[.dseg] 0x000060 0x000063      0      3      3      64   4.7%
+[.cseg] 0x000000 0x0001ec    492      0    492    1024  48.0%
+[.dseg] 0x000060 0x00006d      0     13     13      64  20.3%
 [.eseg] 0x000000 0x000000      0      0      0      64   0.0%
 
 Assembly complete, 0 errors, 0 warnings

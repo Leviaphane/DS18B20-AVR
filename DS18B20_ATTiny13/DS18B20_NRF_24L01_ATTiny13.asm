@@ -3,6 +3,7 @@
 .include "DS18B20.inc"
 .include "SPI.inc"
 
+	.equ	DeviceID	=	0b10101010
 	.equ	TimeLim1	=	50
 	.equ	TimeLim2	=	0
 	.equ	TimeLim3	=	0
@@ -11,6 +12,7 @@
 ; RAM =====================================================
 .DSEG ; RAM
 TimeCount:	.BYTE		3	;  Time counter	
+ThermoData:	.BYTE		10	;  Data to transmit
 
 ; FLASH ===================================================
 .CSEG ; Code segment
@@ -61,7 +63,6 @@ M0:
 	LDI		TempReg, low(RAMEND)
 	OUT		SPL, TempReg
 	
-	
 	// Setup timer
 	LDI		TempReg, 0b00000101
 	OUT		TCCR0B,	TempReg
@@ -92,7 +93,7 @@ M0:
 	LDI		CommandReg, 0b11111111		; Write Tl (No alarm)
 	RCALL	SendCommand 
 
-	LDI		CommandReg, 0b00000000		; Write ConfigReg (0.5C accuracy)
+	LDI		CommandReg, 0b01100000		; Write ConfigReg (0.5C accuracy)
 	RCALL	SendCommand			 
 	
 	LDI		TimeReg, ComDelay
@@ -119,11 +120,18 @@ W0:	RCALL	Read						; Waiting for conversion
 	LDI		CommandReg, ReadData		; Read ScratchPad (0xBE)
 	RCALL	SendCommand
 
-	RCALL	ReadCommand					; Read Tl
-	MOV		TByteL, CommandReg
+	LDI		R30, low(ThermoData)
+	LDI		R31, high(ThermoData)
+	LDI		TempReg, DeviceID
+	ST		Z+, TempReg
 
-	RCALL	ReadCommand					; Read Th
-	MOV		TByteH, CommandReg
+	LDI		TempReg, 9
+W1:
+	RCALL	ReadCommand					; Read data
+	ST		Z+, CommandReg
+
+	DEC		TempReg
+	BRNE	W1
 
 	// SPrepearing for send
 E0:	
@@ -153,14 +161,23 @@ E1:
 	CBI		SPI_Port,	SPI_SC
 	LDI		SPI_Data,	0b10100000				; Send 
 	RCALL	SPI_Send
-	MOV		SPI_Data,	TByteL					; Temp low byte
-	RCALL	SPI_Send
-	MOV		SPI_Data,	TByteH					; Temp high byte
-	RCALL	SPI_Send
-	SBI		SPI_Port,	SPI_SC
+	
+	// Load data
+	LDI		R30, low(ThermoData)
+	LDI		R31, high(ThermoData)
 
+	LDI		TempReg, 10
+W2:
+	LD		SPI_Data, Z+
+	RCALL	SPI_Send
+
+	DEC		TempReg
+	BRNE	W2
+	SBI		SPI_Port,	SPI_SC
+	
+	// Transmit data
 	SBI		SPI_Port,	SPI_CE					; In AIR mode
-	LDI		TimeReg,	15
+	LDI		TimeReg,	25
 	RCALL	Delay
 	CBI		SPI_Port,	SPI_CE					; Out AIR mode
 
@@ -186,6 +203,10 @@ E2: ; Turn on the timer and go to sleep
 
 	LDI		TempReg, TimeLim3		
 	ST		Z,		TempReg
+
+	IN		TempReg, TIFR0
+	ORI		TempReg, 0b00000010
+	OUT		TIFR0, TempReg
 
 	LDI		TempReg, 0
 	OUT		TCNT0, TempReg
