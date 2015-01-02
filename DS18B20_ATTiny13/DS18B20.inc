@@ -17,8 +17,6 @@
 #define _DS18B20_INC_
 	.device ATtiny13A
 
-	.def	TByteL		=	R17
-	.def	TByteH		=	R18
 	.def	CommandReg	=	R20
 
 	; Thermo command

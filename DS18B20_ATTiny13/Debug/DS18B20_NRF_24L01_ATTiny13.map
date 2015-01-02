@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Sun Dec 21 21:41:02 2014
+AVRASM ver. 2.1.57  E:\Electronics\Projects\DS18B20_Thermometer\NRF24L01\DS18B20_ATTiny13\DS18B20_NRF_24L01_ATTiny13.asm Fri Jan 02 18:15:11 2015
 
 
 EQU  SIGNATURE_000 0000001e
@@ -294,8 +294,6 @@ EQU  ADCCaddr     00000009
 EQU  INT_VECTORS_SIZE 0000000a
 DEF  TempReg      r16
 DEF  TimeReg      r25
-DEF  TByteL       r17
-DEF  TByteH       r18
 DEF  CommandReg   r20
 EQU  SkipROM      000000cc
 EQU  WriteData    0000004e
@@ -314,7 +312,7 @@ EQU  SPI_SCK      00000002
 EQU  SPI_CE       00000003
 EQU  SPI_SC       00000004
 EQU  DeviceID     000000aa
-EQU  TimeLim1     00000032
+EQU  TimeLim1     00000096
 EQU  TimeLim2     00000000
 EQU  TimeLim3     00000000
 DSEG TimeCount    00000060
@@ -322,23 +320,23 @@ DSEG ThermoData   00000063
 CSEG M0           0000001d
 CSEG M1           0000000a
 CSEG M2           0000001c
-CSEG Delay        00000084
-CSEG ResetPulse   000000c5
-CSEG SendCommand  0000008c
+CSEG Delay        0000008e
+CSEG ResetPulse   000000cf
+CSEG SendCommand  00000096
 CSEG W0           0000003a
-CSEG Read         000000b3
-CSEG W1           00000047
-CSEG ReadCommand  00000097
-CSEG E0           0000004b
-CSEG SPI_Init     000000d5
-CSEG E1           0000004c
-CSEG SPI_Send     000000df
-CSEG W2           00000062
-CSEG E2           00000071
-CSEG E3           00000082
-CSEG L0           00000086
-CSEG F0           0000008e
-CSEG Write0       000000aa
-CSEG Write1       0000009f
-CSEG F1           00000099
-CSEG S0           000000e1
+CSEG Read         000000bd
+CSEG W1           00000049
+CSEG ReadCommand  000000a1
+CSEG E0           0000004d
+CSEG SPI_Init     000000df
+CSEG E1           0000004e
+CSEG SPI_Send     000000e9
+CSEG W2           0000006a
+CSEG E2           0000007b
+CSEG E3           0000008c
+CSEG L0           00000090
+CSEG F0           00000098
+CSEG Write0       000000b4
+CSEG Write1       000000a9
+CSEG F1           000000a3
+CSEG S0           000000eb

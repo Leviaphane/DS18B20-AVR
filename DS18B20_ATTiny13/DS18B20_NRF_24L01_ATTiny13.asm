@@ -4,7 +4,7 @@
 .include "SPI.inc"
 
 	.equ	DeviceID	=	0b10101010
-	.equ	TimeLim1	=	50
+	.equ	TimeLim1	=	150
 	.equ	TimeLim2	=	0
 	.equ	TimeLim3	=	0
 
@@ -112,6 +112,9 @@ W0:	RCALL	Read						; Waiting for conversion
 	SBRS	CommandReg, 7				
 	RJMP	W0
 
+	LDI		TimeReg, ComDelay
+	RCALL	Delay
+
 	RCALL	ResetPulse					; Reset/Present signal
 	
 	LDI		CommandReg, SkipROM			; Skip ROM (0xCC)
@@ -154,12 +157,20 @@ E1:
 	LDI		SPI_Data,	0b00001010				; Init CONFIG
 	RCALL	SPI_Send
 	SBI		SPI_Port,	SPI_SC
+
+	LDI		TimeReg,	15
+	RCALL	Delay
+	
+	CBI		SPI_Port,	SPI_SC
+	LDI		SPI_Data,	0b11100001				; Flush TX
+	RCALL	SPI_Send
+	SBI		SPI_Port,	SPI_SC
 	
 	LDI		TimeReg,	15
 	RCALL	Delay
 
 	CBI		SPI_Port,	SPI_SC
-	LDI		SPI_Data,	0b10100000				; Send 
+	LDI		SPI_Data,	0b10100000				; Payload TX 
 	RCALL	SPI_Send
 	
 	// Load data
@@ -176,6 +187,9 @@ W2:
 	SBI		SPI_Port,	SPI_SC
 	
 	// Transmit data
+	LDI		TimeReg,	15
+	RCALL	Delay
+
 	SBI		SPI_Port,	SPI_CE					; In AIR mode
 	LDI		TimeReg,	25
 	RCALL	Delay
